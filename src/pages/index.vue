@@ -1,60 +1,42 @@
 <script setup lang="ts">
-const user = useUserStore()
-const name = $ref(user.savedName)
-
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
-
-const { t } = useI18n()
+const value = ref('')
+const site_list = computed(() => {
+  const list = value.value.split('\n')
+  return list.map((item) => {
+    const site = item.replaceAll(' ', '')
+    if (site.endsWith('.com'))
+      return `http://${site}`
+  }).filter(Boolean)
+})
 </script>
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/Jeffrey-mu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <input
-      id="input"
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      :aria-label="t('intro.whats-your-name')"
-      type="text"
-      autocomplete="false"
-      p="x4 y2"
-      w="250px"
-      text="center"
-      bg="transparent"
-      border="~ rounded gray-200 dark:gray-700"
-      outline="none active:none"
-      @keydown.enter="go"
-    >
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
-      <button
-        btn m-3 text-sm
-        :disabled="!name"
-        @click="go"
-      >
-        {{ t('button.go') }}
-      </button>
-    </div>
+    <textarea v-model="value" type="text" autocomplete="off" name="text" class="input" placeholder="输入域名" />
+  </div>
+  <div flex="~ wrap gap-10" justify-center>
+    <MyIframe v-for="index, item in site_list" :key="item" :src="index" />
   </div>
 </template>
+
+<style>
+.input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 1em;
+  background-color: #ccc;
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: 300ms ease-in-out;
+}
+
+.input:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+    -13px -13px 100px #ffffff;
+}
+</style>
 
 <route lang="yaml">
 meta:
