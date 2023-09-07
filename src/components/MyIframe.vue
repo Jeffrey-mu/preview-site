@@ -39,7 +39,7 @@ async function handle(type: string) {
   if (type === 'fullback')
     fullScreenShow.value = false
   if (type === 'copylink') {
-    navigator.clipboard.writeText(props.src).then(() => {
+    navigator.clipboard.writeText(props.src.replace('http://', '').replace('.com', '')).then(() => {
     }).catch((err) => {
       console.error('无法复制文本到剪贴板：', err)
     })
