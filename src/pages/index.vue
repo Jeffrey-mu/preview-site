@@ -12,7 +12,7 @@ const site_list = computed(() => {
 
 <template>
   <div>
-    <textarea v-model="value" type="text" autocomplete="off" name="text" class="input" placeholder="输入域名" />
+    <textarea v-model="value" type="text" autocomplete="off" name="text" class="input" w="80%" ma placeholder="输入域名" />
   </div>
   <div flex="~ wrap gap-10" justify-center>
     <MyIframe v-for="index, item in site_list" :key="item" :src="index" />

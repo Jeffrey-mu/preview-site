@@ -76,7 +76,7 @@ const fullScreenStyle = computed(() => {
         </option>
       </select>
     </div>
-    <Hako h="full" w="full" :width="width" :height="height" class="window">
+    <Hako h="fit-content" w="full" :width="width" :height="height" class="window">
       <!-- <Preview shadow="lg" bg="dark:dark-700 light-100" /> -->
       <iframe v-if="reload" :src="src" frameborder="0" w="100%" style="height: 100%;" />
     </Hako>
